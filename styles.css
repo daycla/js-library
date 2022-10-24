@@ -2,7 +2,14 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(155, 155, 155);
+    background-color: rgb(182, 182, 182);
+}
+
+.line {
+    /* for dev purposes of aligning elements */
+    height: 200px;
+    background-color: red;
+    width: 1px;
 }
 
 header {
@@ -52,24 +59,49 @@ header h1 {
         inset -5px -5px 10px 0px rgba(255, 255, 255, 0.447);
 }
 
-main {
-    background-color: rgb(182, 182, 182);
+main{
+    padding-top: 18vh;
+}
+
+.newBookForm {
+    margin: 40px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+    padding: 20px;
+    background-color:rgb(206, 206, 206);
+    box-shadow: inset 5px 5px 10px 0px gray;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.formWrapper label{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.formWrapper label, .newBookForm label {
+    margin: 10px;
+    color: mediumblue;
+}
+
+
+
+.booksList {
     width: 100%;
     position: static;
-    padding-top: 17vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.line {
-    /* for dev purposes of aligning elements */
-    height: 200px;
-    background-color: red;
-    width: 1px;
-}
-
-.tester {
+.book {
     min-height: 50px;
     border-radius: 25px;
     width: 85%;

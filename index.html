@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="javascript.js"></script>
+    <script defer src="javascript.js"></script>
 </head>
 <body>
     <header>
@@ -15,13 +15,18 @@
         <h1 id="booksRead">books read: ##</h1>
     </header>
     <main>
-        <div class="tester"><p>book1</p><p>book1</p></div>
-        <div class="tester"><p>book2</p></div>
-        <div class="tester"><p>book1<p>book1</p><p>book1</p></p></div>
-        <div class="tester"><p>book1</p></div>
-        <div class="tester"><p>book1</p></div>
-        <div class="tester"><p>book1<p>book1</p></p></div>
-        <div class="tester"><p>book1</p></div>
+        <div class="newBookForm">
+            <div class="formWrapper">
+                <label for="formTitle">title: <input name="formTitle" type="text"></label>
+                <label for="formAuthor">author: <input name="formAuthor" type="text"></label>
+                <label for="formPages">pages: <input name="formPages" type="text"></label>
+            </div>
+            <label for="formReadYet">read yet? <input name="formReadYet" type="checkbox"></label>
+            <label for="formSubmit"><button name="formSubmit">Submit</button></label>
+        </div>
+        <div class="booksList">
+            <div class="book"></div>
+        </div>
     </main>
 </body>
 </html>
