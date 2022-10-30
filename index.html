@@ -11,21 +11,20 @@
 <body>
     <header>
         <h1 id="usersLibrary">user's Library</h1>
-        <button id="newBookButton">new book</button>
+        <button class="newBookButton" id="newBookButton">new book</button>
         <h1 id="booksRead">books read: ##</h1>
     </header>
     <main>
-        <div class="newBookForm">
+        <form action="" method="" class="newBookForm">
             <div class="formWrapper">
-                <label for="formTitle">title: <input name="formTitle" type="text"></label>
-                <label for="formAuthor">author: <input name="formAuthor" type="text"></label>
-                <label for="formPages">pages: <input name="formPages" type="text"></label>
+                <label for="formTitle">title: <input name="formTitle" id="formTitle" type="text"></label>
+                <label for="formAuthor">author: <input name="formAuthor" id="formAuthor" type="text"></label>
+                <label for="formPages">pages: <input name="formPages" id="formPages" type="text"></label>
             </div>
-            <label for="formReadYet">read yet? <input name="formReadYet" type="checkbox"></label>
-            <label for="formSubmit"><button name="formSubmit">Submit</button></label>
-        </div>
+            <!-- <label for="formReadYet">read yet? <input name="formReadYet" type="checkbox"></label> -->
+            <label for="formSubmit"><button name="formSubmit" id="formSubmit">Submit</button></label>
+        </form>
         <div class="booksList">
-            <div class="book"></div>
         </div>
     </main>
 </body>
