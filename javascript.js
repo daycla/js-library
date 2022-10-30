@@ -16,6 +16,18 @@
 //add book to shelf
 
 const booksList = document.querySelector('.booksList');
+const newBookButton = document.querySelector('.newBookButton');
+const newBookForm = document.querySelector('.newBookForm');
+const formSubmit = document.querySelector('#formSubmit');
+
+let bookShelf = [];
+
+//OPEN FORM
+newBookButton.addEventListener('click', () => {
+    if (newBookForm.style.display = 'none') {
+        newBookForm.style.display = 'flex';
+    }
+})
 
 function Book(title, author, pages) {
     this.title = title,
@@ -34,24 +46,33 @@ Book.prototype.spine = function() {
 }
 
 exampleOne = new Book("Left Hand of Darkness", "Ursula K LeGuin", "450");
+bookShelf.push(exampleOne);
 
-exampleOne.spine();
+displayBookShelf();
 
-// function retrieveFormData() {
-//     let title = document.getElementById("formTitle").value;
-//     let author = document.getElementById("formAuthor").value;
-//     let pages = document.getElementById("formPages").value;
+// console.log(bookShelf);
 
-//     let newBookOne = new Book(title, author, pages);
-//     return newBookOne;
-// }
+formSubmit.addEventListener('click', function() {
+    addBooktoShelf(); //book from form and hardExample both consoleLogs 
+    displayBookShelf(); //neither one appears on shelf
+    newBookForm.style.display = 'none';
+})
 
 function addBooktoShelf() {
     let title = document.getElementById("formTitle").value;
     let author = document.getElementById("formAuthor").value;
     let pages = document.getElementById("formPages").value;
     let newBook = new Book(title, author, pages);
-    newBook.spine();
+    bookShelf.push(newBook);
+    localStorage.setItem('storedBookShelf', bookShelf);
+    // console.log(bookShelf); 
 }
 
-addBooktoShelf();
+function displayBookShelf() {
+    const storedBookShelf = localStorage.getItem('storedBookShelf')
+    for (const book of storedBookShelf) {
+        book.spine();
+        console.log(book); //this DOES WORK in hardcode
+    }
+}
+
