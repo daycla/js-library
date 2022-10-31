@@ -19,6 +19,7 @@ const booksList = document.querySelector('.booksList');
 const newBookButton = document.querySelector('.newBookButton');
 const newBookForm = document.querySelector('.newBookForm');
 const formSubmit = document.querySelector('#formSubmit');
+const booksRead = document.querySelector('#booksRead');
 
 let myLibrary = [];
 
@@ -29,15 +30,47 @@ exampleThree = new Book("Marriage of Heaven and Hell", "William Blake", 150, tru
 myLibrary.push(exampleOne);
 myLibrary.push(exampleTwo);
 myLibrary.push(exampleThree);
+myLibrary.push(exampleThree);
+myLibrary.push(exampleThree);
 
 newBookButton.addEventListener('click', () => newBookForm.style.display = 'flex');
+formSubmit.addEventListener('click', () => formSubmitClick());
 
+function formSubmitClick() {
+    addBookFromForm();
+    clearBookshelf();
+    fillBookshelf();
+    newBookForm.style.display = 'none';
+}
+
+function setPage() {
+    fillBookshelf();
+    booksRead.textContent = `${myLibrary.length} books`;
+}
+ 
 function Book(title, author, pages, readYet) {
     this.title = title,
     this.author = author,
     this.pages = pages,
     this.readYet = readYet
 }   
+
+function addBookFromForm() {
+    let title = document.querySelector('#formTitle').value;
+    let author = document.querySelector('#formAuthor').value;
+    let pages = document.querySelector('#formPages').value;
+    let readYet = document.querySelector('#formReadYet').checked;
+
+    let newBook = new Book(title, author, pages, readYet);
+    myLibrary.push(newBook);
+}
+
+function clearBookshelf() {
+    const allBooks = document.querySelectorAll('.book');
+    for (const book of allBooks) {
+        book.remove();
+    }
+}
 
 function fillBookshelf() {
     myLibrary.map((book, index) => {
@@ -65,6 +98,8 @@ function createBookItem(book, index) {
     bookPages.textContent = `${book.pages} pages`;
     bookPages.setAttribute('class', 'bookPages');
 
+    //if (book.readyet) add class 
+
     bookItem.appendChild(bookTitle);
     bookItem.appendChild(bookAuthor);
     bookItem.appendChild(bookPages);
@@ -76,7 +111,7 @@ function createBookItem(book, index) {
 function addBookTools() {
 
     const bookItems = Array.from(document.querySelectorAll('.book'));
-    console.log(bookItems)
+    // console.log(bookItems)
 
     bookItems.map((book) => {
 
@@ -87,10 +122,10 @@ function addBookTools() {
         const bookEdit = document.createElement('button');
         bookEdit.setAttribute('class', 'bookTools');
         bookEdit.setAttribute('id', 'bookEdit')
+        bookEdit.textContent = 'edit';
         bookToolsWrapper.appendChild(bookEdit);
 
     })
 }
 
-fillBookshelf();
-
+setPage();
