@@ -7,20 +7,21 @@ const booksList = document.querySelector('.booksList');
 const newBookButton = document.querySelector('.newBookButton');
 const newBookForm = document.querySelector('.newBookForm');
 const formSubmit = document.querySelector('#formSubmit');
-const booksRead = document.querySelector('#booksRead');
+const booksCounter = document.querySelector('#booksRead');
 
 let myLibrary = [];
 
+exampleZero = new Book("Title", "Author", 100, false);
 exampleOne = new Book("Left Hand", "Ursula", 300, false);
 exampleTwo = new Book("Limoncello", "Lacroix", 0, false);
 exampleThree = new Book("Marriage of Heaven and Hell", "William Blake", 150, true);
-exampleZero = new Book("Title", "Author", 100, true)
+exampleFour = new Book("Band-Aid", "Fabric", 16, true);
 
-myLibrary.push(exampleZero);
 myLibrary.push(exampleZero);
 myLibrary.push(exampleOne);
 myLibrary.push(exampleTwo);
 myLibrary.push(exampleThree);
+myLibrary.push(exampleFour);
 
 //opens form
 newBookButton.addEventListener('click', () => newBookForm.style.display = 'flex');
@@ -36,10 +37,15 @@ function formSubmitClick() {
     newBookForm.style.display = 'none';
 }
 
-//master function that runs when page is loaded
+//master function that runs when page is loaded 
+//redundant but for naming purposes ... 
 function setPage() {
     fillBookshelf();
-    booksRead.textContent = `${myLibrary.length} books`;
+}
+
+function setBooksCounter() {
+    const count = myLibrary.length;
+    booksCounter.textContent = `${count} books`;
 }
 
 //book constructor
@@ -93,6 +99,7 @@ function fillBookshelf() {
     //put functions inside the map above^ :)
     addBookTools();
     addBookToolsListeners();
+    setBooksCounter();
 }
 
 function sortByReadYet() {
