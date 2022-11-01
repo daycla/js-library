@@ -8,6 +8,8 @@ const newBookButton = document.querySelector('.newBookButton');
 const newBookForm = document.querySelector('.newBookForm');
 const formSubmit = document.querySelector('#formSubmit');
 const booksCounter = document.querySelector('#booksRead');
+const username = document.querySelector('#username');
+    username.setAttribute('contenteditable', true);
 
 let myLibrary = [];
 
@@ -43,6 +45,7 @@ function setPage() {
     fillBookshelf();
 }
 
+//counts books 
 function setBooksCounter() {
     const count = myLibrary.length;
     booksCounter.textContent = `${count} books`;
@@ -194,3 +197,4 @@ function addBookToolsListeners() {
 
 setPage();
 
+//i love you!

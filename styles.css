@@ -201,3 +201,20 @@ main{
     left: -2.7%;
     filter: invert(11%) sepia(93%) saturate(6397%) hue-rotate(246deg) brightness(72%) contrast(142%) opacity(25%);
 }
+
+input {
+    border: 0;
+    border-radius: 8px;
+    padding: 5px 5px 5px 10px;
+    background-color: rgb(227, 227, 227);
+    box-shadow: inset 2px 2px 5px 0px rgb(158, 158, 158);
+    color: mediumblue;
+}
+
+input[type="checkbox"] {
+    filter: invert(10%) sepia(1%) saturate(568%) hue-rotate(189deg) brightness(118%) contrast(78%);
+}
+
+input[type="checkbox"]:checked {
+    filter: saturate(0%) brightness(190%) contrast(80%);
+}
