@@ -1,19 +1,7 @@
-//each entry
-//div container (span.title span.author span.pages etc)
-
-//when new book button clikced
-//slide main down, revealing form which is "behind " it in space under header
-
-//var data = new FormData();
-//<input type="email" id="user-email"/> 
-//data.append("email", document.getElementById("user-email").value);
-//simple method to get data from html form into object (run func on submit button click)
-
-//take data from form
-//create book
-//create element for each piece of data
-//append all data elements to book
-//add book to shelf
+    
+    // library
+    // oct 2022
+    // author: daycla
 
 const booksList = document.querySelector('.booksList');
 const newBookButton = document.querySelector('.newBookButton');
@@ -33,9 +21,13 @@ myLibrary.push(exampleThree);
 myLibrary.push(exampleThree);
 myLibrary.push(exampleThree);
 
+//opens form
 newBookButton.addEventListener('click', () => newBookForm.style.display = 'flex');
+
+//runs form submission
 formSubmit.addEventListener('click', () => formSubmitClick());
 
+//runs when form is sumbitted, refreshes the rendered books and closes form)
 function formSubmitClick() {
     addBookFromForm();
     clearBookshelf();
@@ -43,11 +35,13 @@ function formSubmitClick() {
     newBookForm.style.display = 'none';
 }
 
+//master function that runs when page is loaded
 function setPage() {
     fillBookshelf();
     booksRead.textContent = `${myLibrary.length} books`;
 }
- 
+
+//book constructor
 function Book(title, author, pages, readYet) {
     this.title = title,
     this.author = author,
@@ -55,6 +49,7 @@ function Book(title, author, pages, readYet) {
     this.readYet = readYet
 }   
 
+//creates book object and adds to myLibrary from data on form
 function addBookFromForm() {
     let title = document.querySelector('#formTitle').value;
     let author = document.querySelector('#formAuthor').value;
@@ -63,8 +58,18 @@ function addBookFromForm() {
 
     let newBook = new Book(title, author, pages, readYet);
     myLibrary.push(newBook);
+
 }
 
+//meant to clear form fields upon submission, does not work 
+function clearForm(title, author, pages, readYet) { 
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    readYet.checked = false;
+}
+
+//deletes all book elements (to be used for refreshing)
 function clearBookshelf() {
     const allBooks = document.querySelectorAll('.book');
     for (const book of allBooks) {
@@ -72,15 +77,21 @@ function clearBookshelf() {
     }
 }
 
+//iterates myLibrary array runs generation funcs
 function fillBookshelf() {
     myLibrary.map((book, index) => {
         createBookItem(book, index);
     })
 
     addBookTools();
+    addBookToolsListeners();
 }
 
+//creates html elements and values for given book
 function createBookItem(book, index) {
+
+    //if !book.title return
+    //id !book.pages dont add 'pages' 
 
     const bookItem = document.createElement('div');
     bookItem.setAttribute('id', index)
@@ -95,10 +106,11 @@ function createBookItem(book, index) {
     bookAuthor.setAttribute('class', 'bookAuthor');
 
     const bookPages = document.createElement('h1');
+    //if book.pages != null
     bookPages.textContent = `${book.pages} pages`;
     bookPages.setAttribute('class', 'bookPages');
 
-    //if (book.readyet) add class 
+    //if (book.readyet) add class?
 
     bookItem.appendChild(bookTitle);
     bookItem.appendChild(bookAuthor);
@@ -108,24 +120,43 @@ function createBookItem(book, index) {
 
 }
 
+//adds edit button to each element with .book (split from createBookItem for size, but remaps books so unsure if optimal)
 function addBookTools() {
 
     const bookItems = Array.from(document.querySelectorAll('.book'));
-    // console.log(bookItems)
 
-    bookItems.map((book) => {
+    bookItems.map((book, index) => {
 
         const bookToolsWrapper = document.createElement('div');
         bookToolsWrapper.setAttribute('class', 'bookToolsWrapper');
         book.appendChild(bookToolsWrapper);
 
         const bookEdit = document.createElement('button');
-        bookEdit.setAttribute('class', 'bookTools');
-        bookEdit.setAttribute('id', 'bookEdit')
+        bookEdit.setAttribute('type', 'button')
+        bookEdit.setAttribute('class', 'bookTools bookEdit');
+        bookEdit.setAttribute('id', index)
         bookEdit.textContent = 'edit';
         bookToolsWrapper.appendChild(bookEdit);
 
+        const bookRemove = document.createElement('button');
+        bookRemove.setAttribute('type', 'button')
+        bookRemove.setAttribute('class', 'bookTools bookRemove');
+        bookRemove.setAttribute('id', index)
+        bookRemove.textContent = 'del';
+        bookToolsWrapper.appendChild(bookRemove);
+
     })
+}
+
+function addBookToolsListeners() {
+    const bookRemoveButton = document.querySelectorAll('.bookRemove');
+    // const bookEditButton = Array.from(document.querySelectorAll('.bookEdit'));
+
+    bookRemoveButton.forEach(brb => brb.addEventListener('click', function(e) {
+        myLibrary.splice(e.target.id, 1);
+        clearBookshelf();
+        fillBookshelf();
+    }))
 }
 
 setPage();
