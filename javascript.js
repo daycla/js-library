@@ -140,9 +140,9 @@ function addBookTools() {
 
         const bookEdit = document.createElement('button');
         bookEdit.setAttribute('type', 'button')
-        bookEdit.setAttribute('class', 'bookTools bookEdit');
+        bookEdit.setAttribute('class', 'bookTools bookReadYetStatus');
         bookEdit.setAttribute('id', index)
-        bookEdit.textContent = 'edit';
+        bookEdit.textContent = 'read';
         bookToolsWrapper.appendChild(bookEdit);
 
         const bookRemove = document.createElement('button');
@@ -159,7 +159,7 @@ function addBookTools() {
         if(myLibrary[index].readYet) {
         const bookReadYet = document.createElement('img');
         bookReadYet.setAttribute('src', 'images/book-check-outline.svg');
-        bookReadYet.setAttribute('class', 'bookReadYet');
+        bookReadYet.setAttribute('class', 'bookReadYetIndicator');
         book.appendChild(bookReadYet);
         }
     })
@@ -167,13 +167,22 @@ function addBookTools() {
 
 function addBookToolsListeners() {
     const bookRemoveButton = document.querySelectorAll('.bookRemove');
-    // const bookEditButton = Array.from(document.querySelectorAll('.bookEdit'));
+    const bookReadYetStatusButton = document.querySelectorAll('.bookReadYetStatus');
 
     bookRemoveButton.forEach(brb => brb.addEventListener('click', function(e) {
         myLibrary.splice(e.target.id, 1);
         clearBookshelf();
         fillBookshelf();
     }))
+
+    bookReadYetStatusButton.forEach(ryb => ryb.addEventListener('click', function(e) {
+        const index = e.target.id;
+        myLibrary[index].readYet = !(myLibrary[index].readYet);
+        clearBookshelf();
+        fillBookshelf();
+    }))
+
+
 }
 
 setPage();

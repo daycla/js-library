@@ -193,7 +193,7 @@ main{
         inset -5px -5px 10px 0px rgba(255, 255, 255, 0.447);
 }
 
-.bookReadYet {
+.bookReadYetIndicator {
     width: 20px;
     height: 20px;
     transform: scale(2.1) ;
