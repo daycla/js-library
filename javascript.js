@@ -12,13 +12,14 @@ const booksRead = document.querySelector('#booksRead');
 let myLibrary = [];
 
 exampleOne = new Book("Left Hand", "Ursula", 300, false);
-exampleTwo = new Book("Limoncello", "Lacroix", 0, true);
+exampleTwo = new Book("Limoncello", "Lacroix", 0, false);
 exampleThree = new Book("Marriage of Heaven and Hell", "William Blake", 150, true);
+exampleZero = new Book("Title", "Author", 100, true)
 
+myLibrary.push(exampleZero);
+myLibrary.push(exampleZero);
 myLibrary.push(exampleOne);
 myLibrary.push(exampleTwo);
-myLibrary.push(exampleThree);
-myLibrary.push(exampleThree);
 myLibrary.push(exampleThree);
 
 //opens form
@@ -51,6 +52,10 @@ function Book(title, author, pages, readYet) {
 
 //creates book object and adds to myLibrary from data on form
 function addBookFromForm() {
+
+    //if !book.title return
+    //id !book.pages dont add 'pages' 
+
     let title = document.querySelector('#formTitle').value;
     let author = document.querySelector('#formAuthor').value;
     let pages = document.querySelector('#formPages').value;
@@ -79,19 +84,23 @@ function clearBookshelf() {
 
 //iterates myLibrary array runs generation funcs
 function fillBookshelf() {
+    sortByReadYet()
     myLibrary.map((book, index) => {
         createBookItem(book, index);
     })
 
+    //could remove map/for each within each of these functions,
+    //put functions inside the map above^ :)
     addBookTools();
     addBookToolsListeners();
 }
 
+function sortByReadYet() {
+    myLibrary.sort((a, b) => (a.readYet > b.readYet) ? 1 : -1);
+}
+
 //creates html elements and values for given book
 function createBookItem(book, index) {
-
-    //if !book.title return
-    //id !book.pages dont add 'pages' 
 
     const bookItem = document.createElement('div');
     bookItem.setAttribute('id', index)
@@ -109,8 +118,6 @@ function createBookItem(book, index) {
     //if book.pages != null
     bookPages.textContent = `${book.pages} pages`;
     bookPages.setAttribute('class', 'bookPages');
-
-    //if (book.readyet) add class?
 
     bookItem.appendChild(bookTitle);
     bookItem.appendChild(bookAuthor);
@@ -146,6 +153,16 @@ function addBookTools() {
         bookToolsWrapper.appendChild(bookRemove);
 
     })
+
+    //readYet indicator
+    bookItems.forEach((book, index) => {
+        if(myLibrary[index].readYet) {
+        const bookReadYet = document.createElement('img');
+        bookReadYet.setAttribute('src', 'images/book-check-outline.svg');
+        bookReadYet.setAttribute('class', 'bookReadYet');
+        book.appendChild(bookReadYet);
+        }
+    })
 }
 
 function addBookToolsListeners() {
@@ -160,3 +177,4 @@ function addBookToolsListeners() {
 }
 
 setPage();
+
