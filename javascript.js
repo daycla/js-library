@@ -8,22 +8,26 @@ const newBookButton = document.querySelector('.newBookButton');
 const newBookForm = document.querySelector('.newBookForm');
 const formSubmit = document.querySelector('#formSubmit');
 const booksCounter = document.querySelector('#booksRead');
+
+//allows edit and save of username
 const username = document.querySelector('#username');
     username.setAttribute('contenteditable', true);
+    username.textContent = localStorage.getItem('username') || "user";
+    username.addEventListener('keyup', () => localStorage.setItem('username', (username.textContent)));
 
-let myLibrary = [];
+let myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
 
-exampleZero = new Book("Title", "Author", 100, false);
-exampleOne = new Book("Left Hand", "Ursula", 300, false);
-exampleTwo = new Book("Limoncello", "Lacroix", 0, false);
-exampleThree = new Book("Marriage of Heaven and Hell", "William Blake", 150, true);
-exampleFour = new Book("Band-Aid", "Fabric", 16, true);
+// exampleZero = new Book("Title", "Author", 100, false);
+// exampleOne = new Book("Left Hand", "Ursula", 300, false);
+// exampleTwo = new Book("Limoncello", "Lacroix", 0, false);
+// exampleThree = new Book("Marriage of Heaven and Hell", "William Blake", 150, true);
+// exampleFour = new Book("Band-Aid", "Fabric", 16, true);
 
-myLibrary.push(exampleZero);
-myLibrary.push(exampleOne);
-myLibrary.push(exampleTwo);
-myLibrary.push(exampleThree);
-myLibrary.push(exampleFour);
+// myLibrary.push(exampleZero);
+// myLibrary.push(exampleOne);
+// myLibrary.push(exampleTwo);
+// myLibrary.push(exampleThree);
+// myLibrary.push(exampleFour);
 
 //opens form
 newBookButton.addEventListener('click', () => newBookForm.style.display = 'flex');
@@ -62,25 +66,21 @@ function Book(title, author, pages, readYet) {
 //creates book object and adds to myLibrary from data on form
 function addBookFromForm() {
 
-    //if !book.title return
-    //id !book.pages dont add 'pages' 
-
     let title = document.querySelector('#formTitle').value;
     let author = document.querySelector('#formAuthor').value;
     let pages = document.querySelector('#formPages').value;
     let readYet = document.querySelector('#formReadYet').checked;
 
+    if (!title) {
+        alert("Your book needs a title!");
+        return
+    }
+
     let newBook = new Book(title, author, pages, readYet);
     myLibrary.push(newBook);
 
-}
+    newBookForm.reset();
 
-//meant to clear form fields upon submission, does not work 
-function clearForm(title, author, pages, readYet) { 
-    title.value = '';
-    author.value = '';
-    pages.value = '';
-    readYet.checked = false;
 }
 
 //deletes all book elements (to be used for refreshing)
@@ -93,13 +93,15 @@ function clearBookshelf() {
 
 //iterates myLibrary array runs generation funcs
 function fillBookshelf() {
-    sortByReadYet()
+    sortByReadYet();
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     myLibrary.map((book, index) => {
         createBookItem(book, index);
     })
 
     //could remove map/for each within each of these functions,
     //put functions inside the map above^ :)
+    
     addBookTools();
     addBookToolsListeners();
     setBooksCounter();
